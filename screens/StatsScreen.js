@@ -8,6 +8,9 @@ import {
 } from 'react-native';
 
 import { useHabits } from '../context/HabitsContext';
+import AppLayout from '../components/AppLayout';
+
+//SE IMPORTA AppLayout Y SE ENVUELVE EL COMPONENTE <SCROLLVIEW> CON <AppLayout> 
 
 export default function StatsScreen() {
   const { habits } = useHabits();
@@ -24,133 +27,135 @@ export default function StatsScreen() {
     total > 0 ? Math.round((completados / total) * 100) : 0;
 
   return (
-    <ScrollView
-      style={styles.scroll}
-      contentContainerStyle={styles.contenedor}
-    >
-      <Text style={styles.titulo}>Estadísticas</Text>
+    <AppLayout> 
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.contenedor}
+      >
+        <Text style={styles.titulo}>Estadísticas</Text>
 
-      <Text style={styles.subtitulo}>
-        Consultá cómo estás avanzando con tus hábitos.
-      </Text>
-
-      <View style={styles.tarjetaPrincipal}>
-        <Text style={styles.etiquetaPrincipal}>
-          Cumplimiento de hoy
+        <Text style={styles.subtitulo}>
+          Consultá cómo estás avanzando con tus hábitos.
         </Text>
 
-        <Text style={styles.porcentaje}>
-          {porcentaje}%
-        </Text>
+        <View style={styles.tarjetaPrincipal}>
+          <Text style={styles.etiquetaPrincipal}>
+            Cumplimiento de hoy
+          </Text>
 
-        <View style={styles.barraFondo}>
-          <View
-            style={[
-              styles.barraProgreso,
-              { width: `${porcentaje}%` },
-            ]}
-          />
-        </View>
+          <Text style={styles.porcentaje}>
+            {porcentaje}%
+          </Text>
 
-        <Text style={styles.textoPrincipal}>
-          {completados} de {total} hábitos completados
-        </Text>
-      </View>
+          <View style={styles.barraFondo}>
+            <View
+              style={[
+                styles.barraProgreso,
+                { width: `${porcentaje}%` },
+              ]}
+            />
+          </View>
 
-      <Text style={styles.tituloSeccion}>
-        Resumen general
-      </Text>
-
-      <View style={styles.tarjeta}>
-        <View style={styles.fila}>
-          <Text style={styles.etiqueta}>Total de hábitos</Text>
-          <Text style={styles.valor}>{total}</Text>
-        </View>
-
-        <View style={styles.separador} />
-
-        <View style={styles.fila}>
-          <Text style={styles.etiqueta}>Completados</Text>
-          <Text style={[styles.valor, styles.verde]}>
-            {completados}
+          <Text style={styles.textoPrincipal}>
+            {completados} de {total} hábitos completados
           </Text>
         </View>
 
-        <View style={styles.separador} />
+        <Text style={styles.tituloSeccion}>
+          Resumen general
+        </Text>
 
-        <View style={styles.fila}>
-          <Text style={styles.etiqueta}>Pendientes</Text>
-          <Text style={[styles.valor, styles.naranja]}>
-            {pendientes}
-          </Text>
-        </View>
-      </View>
-
-      <Text style={styles.tituloSeccion}>
-        Detalle de hábitos
-      </Text>
-
-      {habits.length === 0 ? (
         <View style={styles.tarjeta}>
-          <Text style={styles.mensajeVacio}>
-            Todavía no hay hábitos para mostrar.
-            Registrá uno desde la pestaña Nuevo hábito.
-          </Text>
+          <View style={styles.fila}>
+            <Text style={styles.etiqueta}>Total de hábitos</Text>
+            <Text style={styles.valor}>{total}</Text>
+          </View>
+
+          <View style={styles.separador} />
+
+          <View style={styles.fila}>
+            <Text style={styles.etiqueta}>Completados</Text>
+            <Text style={[styles.valor, styles.verde]}>
+              {completados}
+            </Text>
+          </View>
+
+          <View style={styles.separador} />
+
+          <View style={styles.fila}>
+            <Text style={styles.etiqueta}>Pendientes</Text>
+            <Text style={[styles.valor, styles.naranja]}>
+              {pendientes}
+            </Text>
+          </View>
         </View>
-      ) : (
-        habits.map((habito) => (
-          <View key={habito.id} style={styles.tarjetaHabito}>
-            <View style={styles.filaHabito}>
-              <View style={styles.detalleHabito}>
-                <Text style={styles.nombreHabito}>
-                  {habito.nombre}
-                </Text>
 
-                {habito.descripcion ? (
-                  <Text style={styles.descripcion}>
-                    {habito.descripcion}
+        <Text style={styles.tituloSeccion}>
+          Detalle de hábitos
+        </Text>
+
+        {habits.length === 0 ? (
+          <View style={styles.tarjeta}>
+            <Text style={styles.mensajeVacio}>
+              Todavía no hay hábitos para mostrar.
+              Registrá uno desde la pestaña Nuevo hábito.
+            </Text>
+          </View>
+        ) : (
+          habits.map((habito) => (
+            <View key={habito.id} style={styles.tarjetaHabito}>
+              <View style={styles.filaHabito}>
+                <View style={styles.detalleHabito}>
+                  <Text style={styles.nombreHabito}>
+                    {habito.nombre}
                   </Text>
-                ) : null}
-              </View>
 
-              <View
-                style={[
-                  styles.etiquetaEstado,
-                  habito.completadoHoy
-                    ? styles.fondoVerde
-                    : styles.fondoNaranja,
-                ]}
-              >
-                <Text
+                  {habito.descripcion ? (
+                    <Text style={styles.descripcion}>
+                      {habito.descripcion}
+                    </Text>
+                  ) : null}
+                </View>
+
+                <View
                   style={[
-                    styles.textoEstado,
+                    styles.etiquetaEstado,
                     habito.completadoHoy
-                      ? styles.verde
-                      : styles.naranja,
+                      ? styles.fondoVerde
+                      : styles.fondoNaranja,
                   ]}
                 >
-                  {habito.completadoHoy
-                    ? 'Completado'
-                    : 'Pendiente'}
-                </Text>
+                  <Text
+                    style={[
+                      styles.textoEstado,
+                      habito.completadoHoy
+                        ? styles.verde
+                        : styles.naranja,
+                    ]}
+                  >
+                    {habito.completadoHoy
+                      ? 'Completado'
+                      : 'Pendiente'}
+                  </Text>
+                </View>
               </View>
             </View>
-          </View>
-        ))
-      )}
+          ))
+        )}
 
-      <Text style={styles.nota}>
-        Estas estadísticas representan el estado actual de
-        los hábitos. Todavía no se conserva un historial por día.
-      </Text>
-    </ScrollView>
+        <Text style={styles.nota}>
+          Estas estadísticas representan el estado actual de
+          los hábitos. Todavía no se conserva un historial por día.
+        </Text>
+      </ScrollView>
+    </AppLayout>
   );
 }
 
 const styles = StyleSheet.create({
   scroll: {
     flex: 1,
-    backgroundColor: '#F5F7FB',
+    backgroundColor: 'transparent',
   },
   contenedor: {
     padding: 22,

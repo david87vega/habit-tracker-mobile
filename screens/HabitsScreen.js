@@ -8,10 +8,12 @@ import {
     StyleSheet,
     Alert,
     Image,
-
 } from 'react-native';
 
 import { useHabits } from '../context/HabitsContext';
+import AppLayout from '../components/AppLayout';
+
+//SE IMPORTA AppLayout Y SE ENVUELVE EL COMPONENTE <SCROLLVIEW> CON <AppLayout> 
 
 export default function HabitsScreen() {
     const { habits, toggleHabit, deleteHabit } = useHabits();
@@ -86,7 +88,9 @@ export default function HabitsScreen() {
                         onPress={() => confirmarEliminacion(item)}
                         activeOpacity={0.8}
                     >
-                        <Text style={styles.textoEliminar}>Eliminar</Text>
+                        <Text style={styles.textoEliminar}>
+                            Eliminar
+                        </Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -94,52 +98,58 @@ export default function HabitsScreen() {
     }
 
     return (
-        <View style={styles.contenedor}>
-            <Text style={styles.titulo}>Mis hábitos</Text>
+        <AppLayout>
+            <View style={styles.contenedor}>
+                <Text style={styles.titulo}>Mis hábitos</Text>
 
-            <Text style={styles.subtitulo}>
-                Registrá tus avances y mantené la constancia.
-            </Text>
-
-            <View style={styles.resumen}>
-                <Text style={styles.textoResumen}>
-                    Total de hábitos: {habits.length}
+                <Text style={styles.subtitulo}>
+                    Registrá tus avances y mantené la constancia.
                 </Text>
 
-                <Text style={styles.textoResumen}>
-                    Completados: {
-                        habits.filter((habito) => habito.completadoHoy).length
+                <View style={styles.resumen}>
+                    <Text style={styles.textoResumen}>
+                        Total de hábitos: {habits.length}
+                    </Text>
+
+                    <Text style={styles.textoResumen}>
+                        Completados: {
+                            habits.filter(
+                                (habito) => habito.completadoHoy
+                            ).length
+                        }
+                    </Text>
+                </View>
+
+                <FlatList
+                    data={habits}
+                    keyExtractor={(item) => String(item.id)}
+                    renderItem={renderHabito}
+                    contentContainerStyle={
+                        habits.length === 0
+                            ? styles.listaVacia
+                            : styles.lista
                     }
-                </Text>
+                    ListEmptyComponent={
+                        <View style={styles.mensajeVacio}>
+                            <Image
+                                source={require('../assets/habito1.png')}
+                                style={styles.iconoVacio}
+                                resizeMode="contain"
+                            />
+
+                            <Text style={styles.tituloVacio}>
+                                Todavía no tenés hábitos
+                            </Text>
+
+                            <Text style={styles.textoVacio}>
+                                Entrá en la pestaña Nuevo hábito para registrar
+                                tu primera actividad.
+                            </Text>
+                        </View>
+                    }
+                />
             </View>
-
-            <FlatList
-                data={habits}
-                keyExtractor={(item) => String(item.id)}
-                renderItem={renderHabito}
-                contentContainerStyle={
-                    habits.length === 0 ? styles.listaVacia : styles.lista
-                }
-                ListEmptyComponent={
-                    <View style={styles.mensajeVacio}>
-                        <Image
-                            source={require('../assets/habito1.png')}
-                            style={styles.iconoVacio}
-                            resizeMode="contain"
-                        />
-
-                        <Text style={styles.tituloVacio}>
-                            Todavía no tenés hábitos
-                        </Text>
-
-                        <Text style={styles.textoVacio}>
-                            Entrá en la pestaña Nuevo hábito para registrar
-                            tu primera actividad.
-                        </Text>
-                    </View>
-                }
-            />
-        </View>
+        </AppLayout>
     );
 }
 
@@ -148,7 +158,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 20,
         paddingTop: 24,
-        backgroundColor: '#F5F7FB',
+        backgroundColor: 'transparent',
     },
     titulo: {
         fontSize: 28,

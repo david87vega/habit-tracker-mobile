@@ -13,6 +13,9 @@ import {
 } from 'react-native';
 
 import { useHabits } from '../context/HabitsContext';
+import AppLayout from '../components/AppLayout';
+
+//SE IMPORTA AppLayout Y SE ENVUELVE EL COMPONENTE <SCROLLVIEW> CON <AppLayout> 
 
 export default function AddHabitScreen({ navigation }) {
   const [nombre, setNombre] = useState('');
@@ -47,60 +50,68 @@ export default function AddHabitScreen({ navigation }) {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={styles.contenedorPrincipal}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-    >
-      <ScrollView contentContainerStyle={styles.contenedor}>
-        <Text style={styles.titulo}>Crear un hábito</Text>
-
-        <Text style={styles.subtitulo}>
-          Elegí una actividad que quieras incorporar a tu rutina.
-        </Text>
-
-        <Text style={styles.etiqueta}>Nombre del hábito *</Text>
-
-        <TextInput
-          style={styles.input}
-          placeholder="Ej.: Leer 20 minutos"
-          value={nombre}
-          onChangeText={setNombre}
-          maxLength={80}
-          autoCapitalize="sentences"
-        />
-
-        <Text style={styles.etiqueta}>Descripción</Text>
-
-        <TextInput
-          style={[styles.input, styles.inputDescripcion]}
-          placeholder="¿Qué querés lograr con este hábito?"
-          value={descripcion}
-          onChangeText={setDescripcion}
-          multiline
-          maxLength={250}
-          textAlignVertical="top"
-        />
-
-        <TouchableOpacity
-          style={styles.boton}
-          onPress={guardarHabito}
-          activeOpacity={0.8}
+    <AppLayout>
+      <KeyboardAvoidingView
+        style={styles.contenedorPrincipal}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
+        <ScrollView
+          contentContainerStyle={styles.contenedor}
+          style={styles.scrollView}
         >
-          <Text style={styles.textoBoton}>Guardar hábito</Text>
-        </TouchableOpacity>
+          <Text style={styles.titulo}>Crear un hábito</Text>
 
-        <Text style={styles.nota}>
-          * El nombre del hábito es obligatorio.
-        </Text>
-      </ScrollView>
-    </KeyboardAvoidingView>
+          <Text style={styles.subtitulo}>
+            Elegí una actividad que quieras incorporar a tu rutina.
+          </Text>
+
+          <Text style={styles.etiqueta}>Nombre del hábito *</Text>
+
+          <TextInput
+            style={styles.input}
+            placeholder="Ej.: Leer 20 minutos"
+            value={nombre}
+            onChangeText={setNombre}
+            maxLength={80}
+            autoCapitalize="sentences"
+          />
+
+          <Text style={styles.etiqueta}>Descripción</Text>
+
+          <TextInput
+            style={[styles.input, styles.inputDescripcion]}
+            placeholder="¿Qué querés lograr con este hábito?"
+            value={descripcion}
+            onChangeText={setDescripcion}
+            multiline
+            maxLength={250}
+            textAlignVertical="top"
+          />
+
+          <TouchableOpacity
+            style={styles.boton}
+            onPress={guardarHabito}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.textoBoton}>Guardar hábito</Text>
+          </TouchableOpacity>
+
+          <Text style={styles.nota}>
+            * El nombre del hábito es obligatorio.
+          </Text>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </AppLayout>
   );
 }
 
 const styles = StyleSheet.create({
   contenedorPrincipal: {
     flex: 1,
-    backgroundColor: '#F5F7FB',
+    backgroundColor: 'transparent',
+  },
+  scrollView: {
+    backgroundColor: 'transparent',
   },
   contenedor: {
     padding: 24,

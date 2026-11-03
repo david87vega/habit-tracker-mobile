@@ -9,6 +9,9 @@ import {
 } from 'react-native';
 
 import { useHabits } from '../context/HabitsContext';
+import AppLayout from '../components/AppLayout';
+
+//SE IMPORTA AppLayout Y SE ENVUELVE EL COMPONENTE <SCROLLVIEW> CON <AppLayout> 
 
 export default function HomeScreen({ navigation }) {
   const { habits } = useHabits();
@@ -29,123 +32,126 @@ export default function HomeScreen({ navigation }) {
   );
 
   return (
-    <ScrollView
-      style={styles.scroll}
-      contentContainerStyle={styles.contenedor}
-    >
-      <Text style={styles.saludo}>¡Hola!</Text>
+    <AppLayout>
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.contenedor}
+      >
+        <Text style={styles.saludo}>¡Hola!</Text>
 
-      <Text style={styles.titulo}>
-        Tu progreso de hoy
-      </Text>
-
-      <Text style={styles.subtitulo}>
-        Cada pequeño paso cuenta para construir buenos hábitos.
-      </Text>
-
-      <View style={styles.tarjetaPrincipal}>
-        <Text style={styles.etiquetaProgreso}>
-          Cumplimiento diario
+        <Text style={styles.titulo}>
+          Tu progreso de hoy
         </Text>
 
-        <Text style={styles.porcentaje}>
-          {porcentaje}%
+        <Text style={styles.subtitulo}>
+          Cada pequeño paso cuenta para construir buenos hábitos.
         </Text>
 
-        <View style={styles.barraFondo}>
-          <View
-            style={[
-              styles.barraProgreso,
-              { width: `${porcentaje}%` },
-            ]}
-          />
-        </View>
-
-        <Text style={styles.textoProgreso}>
-          {completados} de {total} hábitos completados
-        </Text>
-      </View>
-
-      <View style={styles.resumen}>
-        <View style={styles.tarjetaResumen}>
-          <Text style={styles.numero}>{total}</Text>
-          <Text style={styles.etiqueta}>Total</Text>
-        </View>
-
-        <View style={styles.tarjetaResumen}>
-          <Text style={[styles.numero, styles.verde]}>
-            {completados}
+        <View style={styles.tarjetaPrincipal}>
+          <Text style={styles.etiquetaProgreso}>
+            Cumplimiento diario
           </Text>
-          <Text style={styles.etiqueta}>Completados</Text>
-        </View>
 
-        <View style={styles.tarjetaResumen}>
-          <Text style={[styles.numero, styles.naranja]}>
-            {pendientes}
+          <Text style={styles.porcentaje}>
+            {porcentaje}%
           </Text>
-          <Text style={styles.etiqueta}>Pendientes</Text>
-        </View>
-      </View>
 
-      <View style={styles.seccion}>
-        <Text style={styles.tituloSeccion}>
-          Hábitos pendientes
-        </Text>
-
-        {habitosPendientes.length === 0 ? (
-          <View style={styles.mensaje}>
-            <Text style={styles.mensajeTitulo}>
-              {total === 0
-                ? 'Todavía no registraste hábitos'
-                : '¡Excelente trabajo!'}
-            </Text>
-
-            <Text style={styles.mensajeTexto}>
-              {total === 0
-                ? 'Creá tu primer hábito para comenzar.'
-                : 'Completaste todos tus hábitos registrados.'}
-            </Text>
+          <View style={styles.barraFondo}>
+            <View
+              style={[
+                styles.barraProgreso,
+                { width: `${porcentaje}%` },
+              ]}
+            />
           </View>
-        ) : (
-          habitosPendientes.slice(0, 3).map((habito) => (
-            <View key={habito.id} style={styles.itemHabito}>
-              <View style={styles.punto} />
 
-              <Text style={styles.nombreHabito}>
-                {habito.nombre}
+          <Text style={styles.textoProgreso}>
+            {completados} de {total} hábitos completados
+          </Text>
+        </View>
+
+        <View style={styles.resumen}>
+          <View style={styles.tarjetaResumen}>
+            <Text style={styles.numero}>{total}</Text>
+            <Text style={styles.etiqueta}>Total</Text>
+          </View>
+
+          <View style={styles.tarjetaResumen}>
+            <Text style={[styles.numero, styles.verde]}>
+              {completados}
+            </Text>
+            <Text style={styles.etiqueta}>Completados</Text>
+          </View>
+
+          <View style={styles.tarjetaResumen}>
+            <Text style={[styles.numero, styles.naranja]}>
+              {pendientes}
+            </Text>
+            <Text style={styles.etiqueta}>Pendientes</Text>
+          </View>
+        </View>
+
+        <View style={styles.seccion}>
+          <Text style={styles.tituloSeccion}>
+            Hábitos pendientes
+          </Text>
+
+          {habitosPendientes.length === 0 ? (
+            <View style={styles.mensaje}>
+              <Text style={styles.mensajeTitulo}>
+                {total === 0
+                  ? 'Todavía no registraste hábitos'
+                  : '¡Excelente trabajo!'}
+              </Text>
+
+              <Text style={styles.mensajeTexto}>
+                {total === 0
+                  ? 'Creá tu primer hábito para comenzar.'
+                  : 'Completaste todos tus hábitos registrados.'}
               </Text>
             </View>
-          ))
-        )}
-      </View>
+          ) : (
+            habitosPendientes.slice(0, 3).map((habito) => (
+              <View key={habito.id} style={styles.itemHabito}>
+                <View style={styles.punto} />
 
-      <TouchableOpacity
-        style={styles.boton}
-        onPress={() => navigation.navigate('Nuevo hábito')}
-        activeOpacity={0.8}
-      >
-        <Text style={styles.textoBoton}>
-          + Registrar nuevo hábito
-        </Text>
-      </TouchableOpacity>
+                <Text style={styles.nombreHabito}>
+                  {habito.nombre}
+                </Text>
+              </View>
+            ))
+          )}
+        </View>
 
-      <TouchableOpacity
-        style={styles.botonSecundario}
-        onPress={() => navigation.navigate('Mis hábitos')}
-        activeOpacity={0.8}
-      >
-        <Text style={styles.textoBotonSecundario}>
-          Ver todos mis hábitos
-        </Text>
-      </TouchableOpacity>
-    </ScrollView>
+        <TouchableOpacity
+          style={styles.boton}
+          onPress={() => navigation.navigate('Nuevo hábito')}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.textoBoton}>
+            + Registrar nuevo hábito
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.botonSecundario}
+          onPress={() => navigation.navigate('Mis hábitos')}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.textoBotonSecundario}>
+            Ver todos mis hábitos
+          </Text>
+        </TouchableOpacity>
+
+      </ScrollView>
+    </AppLayout>
   );
 }
 
 const styles = StyleSheet.create({
   scroll: {
     flex: 1,
-    backgroundColor: '#F5F7FB',
+    backgroundColor: 'transparent',
   },
   contenedor: {
     padding: 22,
