@@ -13,8 +13,6 @@ import {
 import { useHabits } from '../context/HabitsContext';
 import AppLayout from '../components/AppLayout';
 
-//SE IMPORTA AppLayout Y SE ENVUELVE EL COMPONENTE <SCROLLVIEW> CON <AppLayout> 
-
 export default function HabitsScreen() {
     const { habits, toggleHabit, deleteHabit } = useHabits();
 
@@ -39,6 +37,17 @@ export default function HabitsScreen() {
     function renderHabito({ item }) {
         return (
             <View style={styles.tarjeta}>
+
+                {/* Fotografía del hábito */}
+                {item.fotoUri ? (
+                    <Image
+                        source={{ uri: item.fotoUri }}
+                        style={styles.fotoHabito}
+                        resizeMode="cover"
+                    />
+                ) : null}
+
+                {/* Información del hábito */}
                 <View style={styles.contenido}>
                     <Text
                         style={[
@@ -69,6 +78,7 @@ export default function HabitsScreen() {
                     </Text>
                 </View>
 
+                {/* Botones de acciones */}
                 <View style={styles.botones}>
                     <TouchableOpacity
                         style={[
@@ -106,6 +116,7 @@ export default function HabitsScreen() {
                     Registrá tus avances y mantené la constancia.
                 </Text>
 
+                {/* Resumen */}
                 <View style={styles.resumen}>
                     <Text style={styles.textoResumen}>
                         Total de hábitos: {habits.length}
@@ -120,6 +131,7 @@ export default function HabitsScreen() {
                     </Text>
                 </View>
 
+                {/* Lista de hábitos */}
                 <FlatList
                     data={habits}
                     keyExtractor={(item) => String(item.id)}
@@ -160,17 +172,20 @@ const styles = StyleSheet.create({
         paddingTop: 24,
         backgroundColor: 'transparent',
     },
+
     titulo: {
         fontSize: 28,
         fontWeight: 'bold',
         color: '#243B53',
         marginBottom: 8,
     },
+
     subtitulo: {
         fontSize: 15,
         color: '#627D98',
         marginBottom: 20,
     },
+
     resumen: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -181,19 +196,23 @@ const styles = StyleSheet.create({
         marginBottom: 18,
         gap: 8,
     },
+
     textoResumen: {
         fontSize: 14,
         fontWeight: '600',
         color: '#243B53',
     },
+
     lista: {
         paddingBottom: 24,
     },
+
     listaVacia: {
         flexGrow: 1,
         justifyContent: 'center',
         paddingBottom: 30,
     },
+
     tarjeta: {
         backgroundColor: '#FFFFFF',
         borderRadius: 12,
@@ -201,55 +220,75 @@ const styles = StyleSheet.create({
         marginBottom: 14,
         elevation: 2,
     },
+
+    // Fotografía
+    fotoHabito: {
+        width: '100%',
+        height: 180,
+        borderRadius: 10,
+        marginBottom: 14,
+    },
+
     contenido: {
         marginBottom: 14,
     },
+
     nombre: {
         fontSize: 18,
         fontWeight: 'bold',
         color: '#243B53',
         marginBottom: 6,
     },
+
     nombreCompletado: {
         textDecorationLine: 'line-through',
         color: '#829AB1',
     },
+
     descripcion: {
         fontSize: 14,
         color: '#627D98',
         lineHeight: 20,
         marginBottom: 8,
     },
+
     estado: {
         fontSize: 13,
         fontWeight: '600',
         marginTop: 4,
     },
+
     estadoCompletado: {
         color: '#15803D',
     },
+
     estadoPendiente: {
         color: '#B45309',
     },
+
     botones: {
         flexDirection: 'row',
         flexWrap: 'wrap',
         gap: 10,
     },
+
     botonCompletar: {
         backgroundColor: '#2563EB',
         paddingVertical: 10,
         paddingHorizontal: 14,
         borderRadius: 8,
     },
+
     botonDesmarcar: {
         backgroundColor: '#64748B',
     },
+
     textoBoton: {
         color: '#FFFFFF',
         fontWeight: '600',
         fontSize: 13,
     },
+
     botonEliminar: {
         borderWidth: 1,
         borderColor: '#DC2626',
@@ -257,20 +296,24 @@ const styles = StyleSheet.create({
         paddingHorizontal: 14,
         borderRadius: 8,
     },
+
     textoEliminar: {
         color: '#DC2626',
         fontWeight: '600',
         fontSize: 13,
     },
+
     mensajeVacio: {
         alignItems: 'center',
         paddingHorizontal: 20,
     },
+
     iconoVacio: {
         width: 90,
         height: 90,
         marginBottom: 12,
     },
+
     tituloVacio: {
         fontSize: 18,
         fontWeight: 'bold',
@@ -278,6 +321,7 @@ const styles = StyleSheet.create({
         marginBottom: 8,
         textAlign: 'center',
     },
+
     textoVacio: {
         fontSize: 14,
         color: '#627D98',

@@ -11,18 +11,22 @@ export function HabitsProvider({ children }) {
   const [habits, setHabits] = useState([]);
   const [nextId, setNextId] = useState(1);
 
-  function addHabit(nombre, descripcion) {
+  // Agregar un nuevo hábito
+  function addHabit(nombre, descripcion, fotoUri = null) {
     const nuevoHabito = {
       id: nextId,
       nombre: nombre.trim(),
       descripcion: descripcion.trim(),
+      fotoUri: fotoUri,
       completadoHoy: false,
     };
 
     setHabits((actuales) => [...actuales, nuevoHabito]);
+
     setNextId((actual) => actual + 1);
   }
 
+  // Marcar hábito como completado o pendiente
   function toggleHabit(id) {
     setHabits((actuales) =>
       actuales.map((habito) =>
@@ -36,6 +40,7 @@ export function HabitsProvider({ children }) {
     );
   }
 
+  // Eliminar hábito
   function deleteHabit(id) {
     setHabits((actuales) =>
       actuales.filter((habito) => habito.id !== id)
@@ -56,6 +61,7 @@ export function HabitsProvider({ children }) {
   );
 }
 
+// Hook para acceder al contexto
 export function useHabits() {
   const context = useContext(HabitsContext);
 
