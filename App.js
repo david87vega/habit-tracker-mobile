@@ -13,22 +13,27 @@ import HabitsScreen from './screens/HabitsScreen';
 import AddHabitScreen from './screens/AddHabitScreen';
 import StatsScreen from './screens/StatsScreen';
 
+import DiscoverNavigator from './screens/discover/DiscoverNavigator';
+
 const Tab = createBottomTabNavigator();
 
-// Devuelve el ícono correspondiente a cada pantalla
+// Devuelve el icono correspondiente a cada pantalla
 function getTabIcon(routeName, focused) {
   switch (routeName) {
     case 'Inicio':
-      return focused ? 'home' : 'home-outline'; // se agrega el icono de home
+      return focused ? 'home' : 'home-outline';
 
     case 'Mis hábitos':
-      return focused ? 'checkbox' : 'checkbox-outline'; // se agrega el icono para visualizar los hábitos
+      return focused ? 'checkbox' : 'checkbox-outline';
 
     case 'Nuevo hábito':
-      return focused ? 'add-circle' : 'add-circle-outline';// se agrega el icono para registrar un nuevo hábito
+      return focused ? 'add-circle' : 'add-circle-outline';
 
     case 'Estadísticas':
-      return focused ? 'bar-chart' : 'bar-chart-outline'; // y se visualiza el icono de la navegación hacia el componente de estadistica
+      return focused ? 'bar-chart' : 'bar-chart-outline';
+
+    case 'Descubrir':
+      return focused ? 'compass' : 'compass-outline';
 
     default:
       return 'ellipse-outline';
@@ -44,6 +49,7 @@ export default function App() {
             headerStyle: {
               backgroundColor: '#243B53',
             },
+
             headerTintColor: '#FFFFFF',
 
             tabBarShowLabel: true,
@@ -79,6 +85,15 @@ export default function App() {
             name="Estadísticas"
             component={StatsScreen}
           />
+
+          <Tab.Screen
+            name="Descubrir"
+            component={DiscoverNavigator}
+            options={{
+              headerShown: false,
+            }}
+          />
+
         </Tab.Navigator>
       </NavigationContainer>
     </HabitsProvider>
